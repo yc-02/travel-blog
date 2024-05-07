@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('./partials/head.ejs') %>
+<body>
+    <%- include('./partials/nav.ejs')%>
+    <div class="createPage">
+        <form class="addForm" action="/blogs" method="POST">
+            <div id="firstStep">
+                <input name="title" placeholder="Title" class="input" type="text" required id="title"/>
+                <input name="destination" placeholder="Destination" class="input" type="text" required id="destination"/>
+                <input name="days" placeholder="Days" class="input" type="number" id="inputDays" required/>
+                <button class="btn-secondary" type="button" onclick="handleNext()">Next</button>
+            </div>
+            <div id="secondStepContainer">
+                <div id="secondStep">
+
+                </div>
+                <button class="btn-secondary" type="button" onclick="handleBack()">Back</button>
+                <button class="btn-primary">Publish</button>
+            </div>
+            <!-- <textarea  name="contents" placeholder="Contents" class="textarea" required></textarea> -->
+            
+        </form>
+    </div>
+    <script>
+       const daysInput =  document.getElementById('inputDays')
+       const titleInput = document.getElementById('title')
+       const destinationInput = document.getElementById('destination')
+
+       function getTextarea(){
+        const daysValue = daysInput.value
+        console.log(daysValue)
+        const daysArray = Array(parseInt(daysValue)).fill('')
+            daysArray.map((day,index)=>{
+            const textarea = document.createElement("textarea")
+            textarea.id ='textarea'
+            textarea.name='contents'
+            textarea.required=true
+            textarea.placeholder = `Day ${index+1}`
+            document.getElementById("secondStep").appendChild(textarea)
+            })
+            console.log(daysArray)
+        }
+
+        function removeTextarea(){
+            const textarea = document.querySelectorAll("#textarea")
+            textarea.forEach((e)=>{
+                document.getElementById("secondStep").removeChild(e)
+            })
+        }
+
+
+       //next step
+       function handleNext(){
+        const titleValue = titleInput.value
+        const destinationValue = destinationInput.value
+        const daysValue = daysInput.value
+
+        
+        if(titleValue.length>0 && destinationValue.length>0 && daysValue>0){
+            document.getElementById('firstStep').style.display="none"
+            document.getElementById('secondStepContainer').style.display="inline-flex"
+            getTextarea()
+        }
+
+        const existingErrorDays = document.getElementById('errorDays')
+        if(!existingErrorDays &&(daysValue<=0||daysValue.length==0)){
+            const span = document.createElement("span")
+            span.id = 'errorDays'
+            span.innerText = 'Days are required and must be 1 or more.'
+            document.getElementById('inputDays').insertAdjacentElement("afterend",span)
+        }else{
+            if(existingErrorDays){
+                const span = document.getElementById('errorDays')
+                span.remove()
+            }
+        }
+
+        const existingErrorTitle = document.getElementById('errorTitle')
+        if(!existingErrorTitle && titleValue.length===0){
+            const span = document.createElement("span")
+            span.id = 'errorTitle'
+            span.innerText="Title is Required."
+            document.getElementById('title').insertAdjacentElement("afterend",span)
+        }else{
+            if(existingErrorTitle){
+                const span = document.getElementById('errorTitle')
+                span.remove()
+            }
+        }
+
+        const existingErrorDes = document.getElementById('errorDes')
+        if(!existingErrorDes && destinationValue.length===0){
+            const span = document.createElement("span")
+            span.id = 'errorDes'
+            span.innerText="Destination is Required."
+            document.getElementById('destination').insertAdjacentElement("afterend",span)
+        }else{
+            if(existingErrorDes){
+                const span = document.getElementById('errorDes')
+                span.remove()
+            }
+        }
+       }
+
+       //back to previous step
+       function handleBack(){
+        document.getElementById('firstStep').style.display="inline-flex"
+        document.getElementById('secondStepContainer').style.display="none"
+        removeTextarea()
+       }
+
+    </script>
+    <%- include('./partials/footer.ejs') %>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./partials/head.ejs') %>
+<body>
+    <%- include('./partials/nav.ejs')%>
+    <div class="detailsPage">
+      <h2><%= blog.title %></h2>
+      <h3><%= blog.destination %></h3>
+      <a id="delete" data-id="<%= blog._id %>">Delete</a>
+      <% blog.contents.forEach((item,index)=>{%>
+        <div>
+            <h3>Day <%= index+1 %></h3>
+            <p><%= item %></p>
+        </div>
+      <% }) %>
+    </div>
+    <%- include('./partials/footer.ejs') %>
+    <script>
+        const deleteIcon = document.getElementById('delete');
+        deleteIcon.addEventListener('click',(e)=>{
+            const endpoint = `/blogs/${deleteIcon.dataset.id}`
+            fetch(endpoint,{
+            method:'DELETE'
+            })
+            .then((res)=>res.json())
+            .then((data)=>window.location.href = data.redirect)
+            .catch((err)=>{
+                console.log(err)
+            })
+            })
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Signika+Negative:wght@300..700&display=swap');
+body{
+    margin: 0;
+    font-family: "Signika Negative", sans-serif;
+    background-color: #d1fae5;
+    min-height: 90vh;
+    position: relative;
+    color: #1f2937;
+    padding:0px 30px;
+    padding-bottom: 60px;
+}
+nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid #6b7280;
+    padding-top:10px;
+}
+nav ul{
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+a{
+    text-decoration: none;
+    color: rgb(6, 23, 12);
+    font-size: larger;
+}
+li {
+    list-style-type: none;
+}
+
+footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.homePage{
+    padding:30px 0;
+}
+
+.createPage{
+    text-align: center;
+}
+.detailsPage{
+    display: inline-flex;
+    flex-direction: column;
+    max-width: 900px;    
+}
+
+.blogCard{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    
+}
+.blogCard a{
+    margin: 20px;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+}
+
+.blogCard a:hover{
+    background-color:#ecfdf5;
+}
+.addForm{
+    display: inline-flex;
+    flex-direction: column;
+    min-height: 50vh;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+#firstStep{
+    display: inline-flex;
+    flex-direction: column;
+    gap:13px;
+    width: 300px;
+    
+
+}
+
+#secondStepContainer{
+    display: none;
+    flex-direction: column;
+    gap:13px;
+    width: 500px;
+
+}
+#secondStep{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 13px;
+}
+.input{
+    padding:20px 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+}
+
+#textarea{
+    height: 200px;
+    resize: none;
+    padding:20px 10px;
+    border:none;
+    border-radius: 10px;
+
+}
+.btn-primary, .btn-secondary{
+    border:none;
+    border-radius: 10px;
+    background-color: #022c22;
+    padding:13px;
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    cursor: pointer;
+
+}
+.btn-secondary{
+    background-color: #064e3b;
+
+}
+#errorDays, #errorTitle, #errorDes{
+    color: #e11d48;
+    font-size: small;
+}
+#delete{
+    cursor: pointer;
+}
