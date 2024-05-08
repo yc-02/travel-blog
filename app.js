@@ -1,24 +1,30 @@
 const express =require ('express')
-const morgan = require('morgan')
 const mongoose = require('mongoose')
+const morgan = require('morgan')
 const blogRoutes = require('./routes/blogRoutes')
+const authRoutes = require('./routes/authRoutes')
+const cookieParser = require('cookie-parser')
 require('dotenv').config()
 
 const app = express()
 
-const uri = `mongodb+srv://${process.env.username}:${process.env.password}@cluster0.toa8pga.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
 
+
+const uri = `mongodb+srv://${process.env.username}:${process.env.password}@cluster0.toa8pga.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
 mongoose.connect(uri)
     .then((result)=>app.listen(3000))
     .catch((err)=>console.log(err))
 
 
 
-app.set('view engine','ejs')
 
 app.use(express.static('public'));
 app.use(express.urlencoded({extended:true}))
+app.use(express.json())
+app.use(cookieParser())
 app.use(morgan('dev'))
+app.set('view engine','ejs')
+
 
 app.get('/',(req,res)=>{
      res.redirect('/blogs')
@@ -33,6 +39,7 @@ app.get('/create',(req,res)=>{
 })
 
 app.use('/blogs',blogRoutes);
+app.use('/auth',authRoutes)
 
 //404 page
 app.use((req,res)=>{

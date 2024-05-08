@@ -150,12 +150,18 @@ footer{
     font-weight: 500;
     color: white;
     cursor: pointer;
+}
 
+.btn-primary:hover{
+    background-color: #064e3b;
 }
 
 .btn-secondary{
     background-color: #047857;
 
+}
+.btn-secondary:hover{
+    background-color: #059669;
 }
 
 #errorDays, #errorTitle, #errorDes{
@@ -177,15 +183,36 @@ footer{
     padding:30px;
 }
 
-#delete{
-    cursor: pointer;
-    background-color: #064e3b;
-    padding: 10px;
-    border-radius: 10px;
-    color: white;
+
+/* auth page */
+
+.signupPage, .loginPage{
+    text-align: center;
 }
-#delete:hover{
-    background-color: #047857;
+
+.signupForm, .loginForm{
+    display: inline-flex;
+    flex-direction: column;
+    gap: 13px;
+    min-height: 50vh;
+    width: 260px;
+    justify-content: center;
+}
+.loginForm{
+    min-height: auto;
+}
+
+.loginContainer{
+    display: inline-flex;
+    flex-direction: column;
+    min-height: 50vh;
+    justify-content: center;
+    gap: 13px;
+}
+
+#emailError, #usernameError ,#passwordError{
+    font-size: 15px;
+    color: #e11d48;
 }
 
 @media (max-width: 900px) {

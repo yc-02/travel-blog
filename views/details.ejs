@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<%- include('./partials/head.ejs') %>
+  <%- include('./partials/head.ejs') %>
 <body>
     <%- include('./partials/nav.ejs')%>
     <div class="detailsPage">
       <div style="display: flex; justify-content: space-between; align-items: center;">
         <h2><%= blog.title %></h2>
-        <a id="delete" data-id="<%= blog._id %>">
+        <a id="delete" data-id="<%= blog._id %>" class="btn-primary">
           Delete
         </a>
       </div>
@@ -26,16 +24,20 @@
     <%- include('./partials/footer.ejs') %>
     <script>
         const deleteIcon = document.getElementById('delete');
-        deleteIcon.addEventListener('click',(e)=>{
+        deleteIcon.addEventListener('click', async (e)=>{
+            e.preventDefault()
             const endpoint = `/blogs/${deleteIcon.dataset.id}`
-            fetch(endpoint,{
-            method:'DELETE'
-            })
-            .then((res)=>res.json())
-            .then((data)=>window.location.href = data.redirect)
-            .catch((err)=>{
-                console.log(err)
-            })
+            try{
+              const res = await fetch(endpoint,{
+                method:'DELETE'
+              });
+              if(res.ok){
+                location.assign('/')
+              }
+            } catch(err){
+              console.log(err)
+            }
+
             })
 
 

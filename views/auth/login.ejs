@@ -1,0 +1,52 @@
+    <%- include('../partials/head.ejs') %>
+<body>
+    <%- include('../partials/nav.ejs')%>
+    <div class="loginPage">
+      <div class="loginContainer">
+        <form class="loginForm" id="loginForm">
+          <input name="email" placeholder="Email" class="input" type="email" required/>
+          <div id="emailError"></div>
+          <input name="password" placeholder="Password" class="input" type="password" required/>
+          <div id="passwordError"></div>
+          <button class="btn-primary">Log in</button>
+        </form>
+        <div style="text-align: left;">
+          <p>Don't have an account?</p>
+          <a href="/auth/signup" style="font-size: 18px;">sign up</a>
+        </div>
+
+      </div>
+    </div>
+    <%- include('../partials/footer.ejs') %>
+    <script>
+      const form = document.getElementById('loginForm');
+      const passwordError = document.getElementById('passwordError')
+
+      form.addEventListener('submit',async (e)=>{
+        e.preventDefault();
+        const email = form.email.value;
+        const password =form.password.value;
+        try{
+          const res = await fetch('/auth/login', {
+            method:'POST',
+            body:JSON.stringify({email,password}),
+            headers:{'Content-Type':'application/json'}
+          })
+          const data = await res.json();
+          if(data.user){
+            location.assign('/')
+          }
+          if(data.errorMessage){
+            passwordError.textContent=data.errorMessage
+
+          }
+
+        }catch(err){
+          console.log(err)
+        }
+
+
+      })
+    </script>
+</body>
+</html>
