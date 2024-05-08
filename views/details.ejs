@@ -4,15 +4,24 @@
 <body>
     <%- include('./partials/nav.ejs')%>
     <div class="detailsPage">
-      <h2><%= blog.title %></h2>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h2><%= blog.title %></h2>
+        <a id="delete" data-id="<%= blog._id %>">
+          Delete
+        </a>
+      </div>
       <h3><%= blog.destination %></h3>
-      <a id="delete" data-id="<%= blog._id %>">Delete</a>
       <% blog.contents.forEach((item,index)=>{%>
         <div>
             <h3>Day <%= index+1 %></h3>
             <p><%= item %></p>
         </div>
       <% }) %>
+      <% if(blog.notes){%>
+        <div class="notes">
+          <p><%= blog.notes %></p>
+        </div>
+      <% } %>
     </div>
     <%- include('./partials/footer.ejs') %>
     <script>

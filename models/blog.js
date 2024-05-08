@@ -17,6 +17,10 @@ const blogSchema = new Schema({
     contents:{
         type:Array,
         required:true
+    },
+    notes:{
+        type:String,
+        required:false
     }
 },{timestamps: true});
 

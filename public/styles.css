@@ -1,71 +1,99 @@
-@import url('https://fonts.googleapis.com/css2?family=Signika+Negative:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Laila:wght@300;400;500;600;700&family=Short+Stack&display=swap');
 body{
     margin: 0;
-    font-family: "Signika Negative", sans-serif;
+    font-family: "Balsamiq Sans", sans-serif;
     background-color: #d1fae5;
     min-height: 90vh;
     position: relative;
-    color: #1f2937;
     padding:0px 30px;
     padding-bottom: 60px;
 }
+
+a{
+    text-decoration: none;
+    color: inherit;
+}
+li {
+    list-style-type: none;
+}
+p{
+    font-size: 18px;
+}
+
+.subTitle{
+    font-size: 15px;
+}
+/* navbar */
+
 nav{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 2px solid #6b7280;
-    padding-top:10px;
+    background-color: #ecfdf5;
+    margin-top: 10px;
+    padding: 30px;
+    border-radius: 30px;
 }
+
 nav ul{
     display: flex;
     align-items: center;
     gap: 13px;
 }
-a{
-    text-decoration: none;
-    color: rgb(6, 23, 12);
-    font-size: larger;
+
+nav a{
+    font-size: 20px;
+
 }
-li {
-    list-style-type: none;
+.navTitle{
+    font-weight: 600;
+    font-size: 22px;
 }
 
+
+/* footer */
 footer{
     position: absolute;
     bottom: 0;
     width: 100%;
     text-align: center;
+    color: dimgray;
 }
+
+
+
+
+
+
+/* homepage */
 
 .homePage{
     padding:30px 0;
 }
-
-.createPage{
-    text-align: center;
-}
-.detailsPage{
-    display: inline-flex;
-    flex-direction: column;
-    max-width: 900px;    
-}
-
 .blogCard{
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    
+    grid-template-columns: repeat(3, 1fr);  
+    row-gap: 50px;
+    column-gap: 50px;
 }
+
 .blogCard a{
-    margin: 20px;
-    padding-left: 20px;
+    padding-left: 30px;
     display: flex;
     flex-direction: column;
     border-radius: 20px;
+    background-color: #ecfdf5;
 }
 
 .blogCard a:hover{
-    background-color:#ecfdf5;
+    color: dimgray;
 }
+
+/* createblogpage */
+.createPage{
+    text-align: center;
+}
+
 .addForm{
     display: inline-flex;
     flex-direction: column;
@@ -90,12 +118,14 @@ footer{
     width: 500px;
 
 }
+
 #secondStep{
     display: flex;
     width: 100%;
     flex-direction: column;
     gap: 13px;
 }
+
 .input{
     padding:20px 10px;
     font-size: 16px;
@@ -122,14 +152,49 @@ footer{
     cursor: pointer;
 
 }
+
 .btn-secondary{
-    background-color: #064e3b;
+    background-color: #047857;
 
 }
+
 #errorDays, #errorTitle, #errorDes{
     color: #e11d48;
     font-size: small;
 }
+
+.notes{
+    border-top: 2px solid #064e3b;
+    width: 95vw;
+}
+
+/* details page */
+
+.detailsPage{
+    display: flex;
+    flex-direction: column;
+    max-width:1100px;    
+    padding:30px;
+}
+
 #delete{
     cursor: pointer;
+    background-color: #064e3b;
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+}
+#delete:hover{
+    background-color: #047857;
+}
+
+@media (max-width: 900px) {
+    .blogCard{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .detailsPage{
+        max-width: 90vw;
+    }
 }

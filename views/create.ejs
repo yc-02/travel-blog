@@ -9,17 +9,15 @@
                 <input name="title" placeholder="Title" class="input" type="text" required id="title"/>
                 <input name="destination" placeholder="Destination" class="input" type="text" required id="destination"/>
                 <input name="days" placeholder="Days" class="input" type="number" id="inputDays" required/>
-                <button class="btn-secondary" type="button" onclick="handleNext()">Next</button>
+                <button class="btn-primary" type="button" onclick="handleNext()">Next</button>
             </div>
             <div id="secondStepContainer">
                 <div id="secondStep">
-
                 </div>
+                <textarea  name="notes" placeholder="Notes (optional)" id="notes" class="input"></textarea>
                 <button class="btn-secondary" type="button" onclick="handleBack()">Back</button>
                 <button class="btn-primary">Publish</button>
             </div>
-            <!-- <textarea  name="contents" placeholder="Contents" class="textarea" required></textarea> -->
-            
         </form>
     </div>
     <script>
@@ -29,7 +27,6 @@
 
        function getTextarea(){
         const daysValue = daysInput.value
-        console.log(daysValue)
         const daysArray = Array(parseInt(daysValue)).fill('')
             daysArray.map((day,index)=>{
             const textarea = document.createElement("textarea")
@@ -39,15 +36,8 @@
             textarea.placeholder = `Day ${index+1}`
             document.getElementById("secondStep").appendChild(textarea)
             })
-            console.log(daysArray)
         }
 
-        function removeTextarea(){
-            const textarea = document.querySelectorAll("#textarea")
-            textarea.forEach((e)=>{
-                document.getElementById("secondStep").removeChild(e)
-            })
-        }
 
 
        //next step
@@ -55,12 +45,30 @@
         const titleValue = titleInput.value
         const destinationValue = destinationInput.value
         const daysValue = daysInput.value
-
-        
+        const textarea = document.querySelectorAll("#textarea")
         if(titleValue.length>0 && destinationValue.length>0 && daysValue>0){
             document.getElementById('firstStep').style.display="none"
             document.getElementById('secondStepContainer').style.display="inline-flex"
-            getTextarea()
+            if(textarea.length===0){
+                getTextarea()
+            }else if(daysValue>textarea.length){
+                const plusDays =  daysValue-textarea.length
+                const newDaysArray = Array(parseInt(plusDays)).fill('')
+                newDaysArray.map((day,index)=>{
+                    const newTextarea = document.createElement("textarea")
+                    newTextarea.id = 'textarea'
+                    newTextarea.name = 'contents'
+                    newTextarea.required = true;
+                    newTextarea.placeholder = `Day ${parseInt(textarea.length)+index+1}`
+                    document.getElementById("secondStep").appendChild(newTextarea)
+                })
+            }else if(daysValue<textarea.length){
+                const minusDays = textarea.length - daysValue
+                for(let i=1; i<=minusDays; i++){
+                    document.getElementById("secondStep").removeChild(textarea[textarea.length-i])
+                }
+            }
+            
         }
 
         const existingErrorDays = document.getElementById('errorDays')
@@ -107,7 +115,6 @@
        function handleBack(){
         document.getElementById('firstStep').style.display="inline-flex"
         document.getElementById('secondStepContainer').style.display="none"
-        removeTextarea()
        }
 
     </script>
