@@ -24,7 +24,10 @@ const blog_details = (req,res)=>{
 }
 
 const blog_post = (req,res)=>{
-    const blog = new Blog(req.body)
+    const currentUser = res.locals.user
+    const obj = req.body
+    obj.user_id = currentUser._id
+    const blog = new Blog(obj)
     blog.save()
         .then(()=>{
             res.redirect('/blogs')
@@ -37,18 +40,59 @@ const blog_post = (req,res)=>{
 
 const blog_delete = (req,res)=>{
     const id = req.params.id
-    Blog.findByIdAndDelete(id)
-        .then(()=>{
-            res.status(200).json({})
+    const currentUser = res.locals.user
+    Blog.findById(id)
+        .then((result)=>{
+            if(result.user_id.toString() === currentUser._id.toString() ){
+                Blog.findByIdAndDelete(id)
+                    .then(()=>{
+                        res.status(200).json({ message: 'Blog post deleted successfully' })
+                    })
+                    .catch((err)=>{
+                        console.log(err)
+                    })
+            }else{
+                res.status(403).json({error:'unauthorized'})
+            }
         })
         .catch((err)=>{
             console.log(err)
         })
+
+
+}
+
+const blog_update = (req,res)=>{
+    const id = req.params.id
+    const currentUser = res.locals.user
+    const update = req.body
+    console.log(update)
+    const filter = {_id:id}
+    Blog.findById(id)
+    .then((result)=>{
+        if(result.user_id.toString() === currentUser._id.toString() ){
+            Blog.findOneAndUpdate(filter,update,{new:true})
+                .then((result)=>{
+                    console.log(result)
+                    res.status(200).json({ message: 'Blog updated!' })
+                })
+                .catch((err)=>{
+                    console.log(err)
+                })
+        }else{
+            res.status(403).json({error:'unauthorized'})
+        }
+    })
+    .catch((err)=>{
+        console.log(err)
+    })   
+
 }
 
 module.exports = {
     blog_index,
     blog_details,
     blog_post,
-    blog_delete
+    blog_delete,
+    blog_update
 }

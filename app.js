@@ -4,6 +4,7 @@ const morgan = require('morgan')
 const blogRoutes = require('./routes/blogRoutes')
 const authRoutes = require('./routes/authRoutes')
 const cookieParser = require('cookie-parser')
+const {requireAuth, checkCurrentUser} = require('./middleware/authMiddleware')
 require('dotenv').config()
 
 const app = express()
@@ -25,6 +26,8 @@ app.use(cookieParser())
 app.use(morgan('dev'))
 app.set('view engine','ejs')
 
+app.get('*',checkCurrentUser);
+
 
 app.get('/',(req,res)=>{
      res.redirect('/blogs')
@@ -34,7 +37,7 @@ app.get('/about',(req,res)=>{
     res.render('about',{title:'About'})
 })
 
-app.get('/create',(req,res)=>{
+app.get('/create',requireAuth,(req,res)=>{
     res.render('create',{title:'Create'})
 })
 

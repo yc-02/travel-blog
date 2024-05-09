@@ -21,7 +21,12 @@ const blogSchema = new Schema({
     notes:{
         type:String,
         required:false
+    },
+    user_id:{
+        type:String,
+        required:true
     }
+
 },{timestamps: true});
 
 const Blog = mongoose.model('blog',blogSchema);

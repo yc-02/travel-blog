@@ -2,7 +2,7 @@
 body{
     margin: 0;
     font-family: "Balsamiq Sans", sans-serif;
-    background-color: #d1fae5;
+    /* background-color: #d1fae5; */
     min-height: 90vh;
     position: relative;
     padding:0px 30px;
@@ -22,6 +22,7 @@ p{
 
 .subTitle{
     font-size: 15px;
+    color: rgb(61, 61, 61);
 }
 /* navbar */
 
@@ -29,10 +30,9 @@ nav{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #ecfdf5;
     margin-top: 10px;
     padding: 30px;
-    border-radius: 30px;
+    border-radius: 20px;
 }
 
 nav ul{
@@ -41,10 +41,20 @@ nav ul{
     gap: 13px;
 }
 
-nav a{
-    font-size: 20px;
 
+
+.btn-auth{
+    background-color: #10b981;
+    color: white;
+    padding: 10px;
+    border-radius: 20px;
+    font-size: 15px;
 }
+
+.btn-auth:hover{
+    background-color:#6ee7b7;
+}
+
 .navTitle{
     font-weight: 600;
     font-size: 22px;
@@ -85,9 +95,6 @@ footer{
     background-color: #ecfdf5;
 }
 
-.blogCard a:hover{
-    color: dimgray;
-}
 
 /* createblogpage */
 .createPage{
@@ -141,6 +148,7 @@ footer{
     border-radius: 10px;
 
 }
+
 .btn-primary, .btn-secondary{
     border:none;
     border-radius: 10px;
@@ -171,19 +179,40 @@ footer{
 
 .notes{
     border-top: 2px solid #064e3b;
-    width: 95vw;
 }
 
 /* details page */
-
-.detailsPage{
+.detailPage{
+    display: inline-flex;
+    width: 100%;
+    justify-content: center;
+}
+.detailContainer{
     display: flex;
     flex-direction: column;
-    max-width:1100px;    
+    width:1100px;    
     padding:30px;
+    background-color: #ecfdf5;
+    border-radius: 20px;
 }
 
-
+#newTextarea{
+    height: 200px;
+    resize: none;
+    padding:20px 10px;
+    border:none;
+    border-radius: 10px;
+}
+#updateForm{
+    display: none;
+    flex-direction: column;
+    gap:9px
+}
+#originalContents, #newContents, .contentsContainer{
+    display: flex; 
+    flex-direction: column; 
+    gap: 9px;
+}
 /* auth page */
 
 .signupPage, .loginPage{
@@ -210,7 +239,7 @@ footer{
     gap: 13px;
 }
 
-#emailError, #usernameError ,#passwordError{
+#emailError, #usernameError ,#passwordError, #loginError{
     font-size: 15px;
     color: #e11d48;
 }

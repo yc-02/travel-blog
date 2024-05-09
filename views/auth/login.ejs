@@ -5,14 +5,13 @@
       <div class="loginContainer">
         <form class="loginForm" id="loginForm">
           <input name="email" placeholder="Email" class="input" type="email" required/>
-          <div id="emailError"></div>
           <input name="password" placeholder="Password" class="input" type="password" required/>
-          <div id="passwordError"></div>
+          <div id="loginError"></div>
           <button class="btn-primary">Log in</button>
         </form>
         <div style="text-align: left;">
           <p>Don't have an account?</p>
-          <a href="/auth/signup" style="font-size: 18px;">sign up</a>
+          <a href="/auth/signup" style="font-size: 18px;">Sign up</a>
         </div>
 
       </div>
@@ -20,7 +19,7 @@
     <%- include('../partials/footer.ejs') %>
     <script>
       const form = document.getElementById('loginForm');
-      const passwordError = document.getElementById('passwordError')
+      const loginError = document.getElementById('loginError')
 
       form.addEventListener('submit',async (e)=>{
         e.preventDefault();
@@ -33,11 +32,11 @@
             headers:{'Content-Type':'application/json'}
           })
           const data = await res.json();
-          if(data.user){
+          if(res.ok){
             location.assign('/')
           }
           if(data.errorMessage){
-            passwordError.textContent=data.errorMessage
+            loginError.textContent=data.errorMessage
 
           }
 

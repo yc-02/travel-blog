@@ -1,9 +1,16 @@
 <nav>
-    <a href="/" class="navTitle">Travel Blog</a>
+        <a href="/" class="navTitle">Travel Blog</a>
+        <!-- <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li> -->
     <ul>
-        <li><a href="/about">About</a></li>
-        <li><a href="/contact">Contact</a></li>
-        <li><a href="/auth/login">Log in</a></li>
-        <li><a href="/create">New Post</a></li>
+        <% if(user){ %>
+            <li class="greet">Hello,<%= user.username %></li>
+        <% } %>
+        <% if(user){ %>
+            <li><a href="/create" class="btn-auth">Add New Post</a></li>
+            <li><a href="/auth/logout" class="btn-auth">Log out</a></li>
+        <% }else{ %>
+            <li><a href="/auth/login" class="btn-auth">Log in</a></li>
+        <% } %> 
     </ul>
 </nav>

@@ -2,7 +2,7 @@
 <body>
     <%- include('./partials/nav.ejs')%>
     <div class="createPage">
-        <form class="addForm" action="/blogs" method="POST">
+        <form class="addForm" action="/blogs" method="POST" id="addForm">
             <div id="firstStep">
                 <input name="title" placeholder="Title" class="input" type="text" required id="title"/>
                 <input name="destination" placeholder="Destination" class="input" type="text" required id="destination"/>
@@ -19,12 +19,11 @@
         </form>
     </div>
     <script>
-       const daysInput =  document.getElementById('inputDays')
-       const titleInput = document.getElementById('title')
-       const destinationInput = document.getElementById('destination')
+        const form = document.getElementById('addForm')
 
+        // add new textarea
        function getTextarea(){
-        const daysValue = daysInput.value
+        const daysValue = form.days.value
         const daysArray = Array(parseInt(daysValue)).fill('')
             daysArray.map((day,index)=>{
             const textarea = document.createElement("textarea")
@@ -40,9 +39,9 @@
 
        //next step
        function handleNext(){
-        const titleValue = titleInput.value
-        const destinationValue = destinationInput.value
-        const daysValue = daysInput.value
+        const titleValue = form.title.value
+        const destinationValue = form.destination.value
+        const daysValue = form.days.value
         const textarea = document.querySelectorAll("#textarea")
         if(titleValue.length>0 && destinationValue.length>0 && daysValue>0){
             document.getElementById('firstStep').style.display="none"
