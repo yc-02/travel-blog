@@ -6,11 +6,18 @@
         <% if(user){ %>
             <li class="greet">Hello,<%= user.username %></li>
         <% } %>
-        <% if(user){ %>
-            <li><a href="/create" class="btn-auth">Add New Post</a></li>
-            <li><a href="/auth/logout" class="btn-auth">Log out</a></li>
-        <% }else{ %>
-            <li><a href="/auth/login" class="btn-auth">Log in</a></li>
-        <% } %> 
+        <div class="webNav">
+            <% if(user){ %>
+                <li><a href="/create" class="btn-auth">Add New Post</a></li>
+                <li><a href="/auth/logout" class="btn-auth">Log out</a></li>
+            <% }else{ %>
+                <li><a href="/auth/login" class="btn-auth">Log in</a></li>
+            <% } %> 
+
+        </div>
+        <div class="smNav">
+            <i class="fa-solid fa-bars fa-xl"></i>
+        </div>
     </ul>
+    
 </nav>

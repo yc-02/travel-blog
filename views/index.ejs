@@ -6,21 +6,28 @@
             <div class="blogCard">
             <% blogs.forEach(blog=>{%>
                 <a href="/blogs/<%=blog._id%>">
-                <h3 class="title"><%= blog.title %></h3>
-                <p class="snippet">Destination: <%= blog.destination %></p>
-                <p><%= blog.days %>
-                <% if(blog.days===1){%>
-                    <span>Day</span>
-                <% }else{ %>
-                    <span>Days</span>
+                <% if(blog.images && blog.images.length > 0 && blog.images[0].data){ %>
+                    <img src="data:image/<%=blog.images.contentType%>;base64,<%=blog.images[0].data.toString('base64')%>" class="blogImage" alt="image"/>
                 <% } %>
-                </p>
-                <p class="subTitle">Created at <%= blog.createdAt.toDateString()%></p>
+                <div class="blogText">
+                    <h3 class="title"><%= blog.title %></h3>
+                    <p>Destination: <%= blog.destination %></p>
+                    <p><%= blog.days %>
+                    <% if(blog.days===1){%>
+                        <span>Day</span>
+                    <% }else{ %>
+                        <span>Days</span>
+                    <% } %>
+                    </p>
+                   <p class="subTitle">Created at <%= blog.createdAt.toDateString()%></p>
+                   <P class="subTitle">Created by <%= blog.username %></P>
+
+                </div>
                 </a>
             <%}) %>
             </div>
         <% }else{ %>
-            <p>No Contents Available.</p>
+            <p style="text-align: center;">No Contents Available.</p>
         <% } %>
     </div>
     <%- include('./partials/footer.ejs') %>

@@ -1,12 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Laila:wght@300;400;500;600;700&family=Short+Stack&display=swap');
 body{
     margin: 0;
+    padding: 0;
     font-family: "Balsamiq Sans", sans-serif;
-    /* background-color: #d1fae5; */
-    min-height: 90vh;
+    background-color: #d1fae5;
     position: relative;
+    min-height: 90vh;
     padding:0px 30px;
     padding-bottom: 60px;
+    overflow-x: hidden;
+    
 }
 
 a{
@@ -40,7 +43,14 @@ nav ul{
     align-items: center;
     gap: 13px;
 }
-
+.webNav{
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+.smNav{
+    display: none;
+}
 
 
 .btn-auth{
@@ -80,28 +90,41 @@ footer{
 .homePage{
     padding:30px 0;
 }
+
 .blogCard{
     display: grid;
-    grid-template-columns: repeat(3, 1fr);  
+    grid-template-columns: repeat(2, 1fr);  
     row-gap: 50px;
     column-gap: 50px;
 }
 
 .blogCard a{
-    padding-left: 30px;
     display: flex;
-    flex-direction: column;
+    gap:10px;
     border-radius: 20px;
     background-color: #ecfdf5;
+    overflow: hidden;
+    height: 25vh;
+    align-items: center;
 }
+.blogText{
+    width: 50%;
+    padding: 20px;
 
+}
+.blogImage{
+    width: 50%;
+    height: 100%;
+    object-fit: cover;
+
+}
 
 /* createblogpage */
 .createPage{
     text-align: center;
 }
 
-.addForm{
+#addForm{
     display: inline-flex;
     flex-direction: column;
     min-height: 50vh;
@@ -123,7 +146,6 @@ footer{
     flex-direction: column;
     gap:13px;
     width: 500px;
-
 }
 
 #secondStep{
@@ -140,7 +162,7 @@ footer{
     border-radius: 10px;
 }
 
-#textarea{
+.textarea, .newTextarea,.notesTextarea{
     height: 200px;
     resize: none;
     padding:20px 10px;
@@ -180,6 +202,36 @@ footer{
 .notes{
     border-top: 2px solid #064e3b;
 }
+
+
+#imagePreviewContainer{
+    display: none;
+}
+#imagePreviewContainer,#editImageContainer{
+    height:25vh;
+    width: 25vh;
+    border-radius: 10px;
+    overflow: hidden;
+}
+#imagePreview,#editImage{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.custom-image-input{
+    display: inline-block;
+    cursor: pointer;
+    border: 2px solid rgb(76, 76, 76);
+    padding: 16px;
+    border-radius: 10px;
+    color:rgb(76, 76, 76);
+
+}
+.image-input{
+    display: none;
+}
+
 
 /* details page */
 .detailPage{
@@ -253,4 +305,16 @@ footer{
     .detailsPage{
         max-width: 90vw;
     }
+    .webNav{
+        display: none;
+    }
+    nav{
+        padding: 30px 10px;
+        
+    }
+    .smNav{
+        display: flex;
+        cursor: pointer;
+    }
+
 }

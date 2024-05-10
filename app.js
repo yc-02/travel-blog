@@ -6,7 +6,6 @@ const authRoutes = require('./routes/authRoutes')
 const cookieParser = require('cookie-parser')
 const {requireAuth, checkCurrentUser} = require('./middleware/authMiddleware')
 require('dotenv').config()
-
 const app = express()
 
 
@@ -27,6 +26,8 @@ app.use(morgan('dev'))
 app.set('view engine','ejs')
 
 app.get('*',checkCurrentUser);
+
+
 
 
 app.get('/',(req,res)=>{

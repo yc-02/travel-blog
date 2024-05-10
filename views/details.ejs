@@ -5,20 +5,20 @@
       <div class="detailContainer">
         <div id="detailContent">
           <div style="display: flex; justify-content:space-between; align-items: center;">
-            <h2><%= blog.title %></h2>
+            <h2><%= blog.title %> <span style="display: block; font-size: 18px;"><%= blog.destination %></span></h2>
            <% if(user && user._id.toString() === blog.user_id.toString()){ %>
             <div style="display: inline-flex; gap: 6px;">
-              <div id="edit" class="btn-secondary" onclick="editBlog()">
+              <div class="btn-secondary" onclick="editBlog()">
                 Edit
               </div>
-              <a id="delete" data-id="<%= blog._id %>" class="btn-secondary">
+              <a id="deleteButton" data-id="<%= blog._id %>" class="btn-secondary">
                 Delete
               </a>
             </div>
            <% } %>
           </div>
-          <h3><%= blog.destination %></h3>
-          <p class="subTitle">Updated at <%= blog.updatedAt.toDateString() %></p>
+          <p class="subTitle">Updated at <%= blog.updatedAt.toDateString() %><span style="display: block;">Created by <%= blog.username %></span></p>
+
           <% blog.contents.forEach((item,index)=>{%>
             <div>
                 <h3>Day <%= index+1 %></h3>
@@ -34,10 +34,10 @@
         </div>
         <form id="updateForm" data-days="<%=blog.days%>">
           <div style="display: flex; justify-content: end; gap: 6px;">
-            <div id="edit" class="btn-secondary" onclick="closeEdit()" style="align-self: flex-end;">
+            <div class="btn-secondary" onclick="closeEdit()" style="align-self: flex-end;" type="button">
               Cancel
             </div>
-            <button class="btn-primary" style="align-self: center;" id="update" data-id="<%= blog._id %>" type="button">Update</button>
+            <button class="btn-primary" style="align-self: center;" data-id="<%= blog._id %>" type="submit" id="updateButton">Update</button>
           </div>
               <input name="title" class="input" type="text" required value="<%= blog.title %>"/>
               <input name="destination" class="input" type="text" required value="<%= blog.destination %>"/>
@@ -45,12 +45,20 @@
             <div class="contentsContainer">
               <div id="originalContents" data-contents="<%= blog.contents %>">
                 <% blog.contents.forEach((item,index)=>{%>
-                  <textarea name="contents" id="textarea"><%= item %></textarea>  
+                  <textarea name="contents" class="textarea"><%= item %></textarea>  
                 <% }) %>
               </div>
               <div id="newContents"></div>
             </div>
-              <textarea  name="notes" placeholder="Notes (optional)" id="notes" class="input"></textarea>
+            <label class="custom-image-input">Change Photo
+              <i class="fa-regular fa-image fa-xl"></i>
+              <input name="images" type="file" id="editImageInput" accept="image/png,image/jpeg" class="image-input"/>
+            </label>
+            <div id="editImageContainer">
+              <img src="data:image/<%=blog.images.contentType%>;base64,<%=blog.images[0].data.toString('base64')%>"  id="editImage" alt="imagePreview" 
+              data-src="data:image/<%=blog.images.contentType%>;base64,<%=blog.images[0].data.toString('base64')%>"/>
+            </div>
+              <textarea  name="notes" placeholder="Notes (optional)" class="notesTextarea"></textarea>
           </div>
       </form>
       </div>
@@ -58,11 +66,12 @@
     </div>
     <%- include('./partials/footer.ejs') %>
     <script>
-        const deleteIcon = document.getElementById('delete');
-        if(deleteIcon){
-          deleteIcon.addEventListener('click', async (e)=>{
+      //delete blog
+        const deleteButton = document.getElementById('deleteButton');
+        if(deleteButton){
+          deleteButton.addEventListener('click', async (e)=>{
             e.preventDefault()
-            const endpoint = `/blogs/${deleteIcon.dataset.id}`
+            const endpoint = `/blogs/${deleteButton.dataset.id}`
             try{
               const res = await fetch(endpoint,{
                 method:'DELETE'
@@ -75,6 +84,29 @@
             }
             })
         }
+
+
+
+      // handle update image
+      const imageInput = document.getElementById('editImageInput')
+        const imagePreview = document.getElementById('editImage')
+        const imagePreviewContainer = document.getElementById('editImageContainer')
+        imageInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            if(file!==undefined){
+              reader.addEventListener('load',()=>{
+                imagePreview.src = reader.result;
+              })
+              reader.readAsDataURL(file);
+            }else{
+              imagePreview.src=imagePreview.dataset.src
+            }
+
+        
+        });
+
+
 
 
         //handle update blog
@@ -94,10 +126,10 @@
 
 
 
-        
+        //reset contents to original blog data
         function resetContents(){
           const originalContentsContainer = document.getElementById("originalContents")
-          const contents = document.querySelectorAll('#textarea')
+          const contents = document.querySelectorAll('.textarea')
             //remove origin data
             contents.forEach((item)=>{
                   item.remove()
@@ -107,7 +139,7 @@
             const array = originalContentsData.split(',')
             array.forEach((item)=>{
               const originalTextarea = document.createElement("textarea")
-              originalTextarea.id = 'textarea'
+              originalTextarea.className = 'textarea'
               originalTextarea.name = 'contents'
               originalTextarea.required = true;
               originalTextarea.defaultValue = item
@@ -119,17 +151,17 @@
 
 
 
-
+      //if days changed update texarea quantities
         function addTextarea(){
           //original data
           const originalDays = parseInt(form.dataset.days)
           const daysValue = parseInt(form.days.value)
           const originalContentsContainer = document.getElementById("originalContents")
-          const contents = document.querySelectorAll('#textarea')
+          const contents = document.querySelectorAll('.textarea')
 
           //new textarea
           const newContentsContainer = document.getElementById("newContents")
-          const newContents = document.querySelectorAll("#newTextarea")
+          const newContents = document.querySelectorAll(".newTextarea")
           const newContentsLength = newContents.length
 
 
@@ -141,7 +173,7 @@
               const newDaysArray = Array(plusDays).fill('')
                 newDaysArray.map((day,index)=>{
                     const newTextarea = document.createElement("textarea")
-                    newTextarea.id = 'newTextarea'
+                    newTextarea.className = 'newTextarea'
                     newTextarea.name = 'contents'
                     newTextarea.required = true;
                     newTextarea.placeholder = `Day ${parseInt(originalDays)+index+1+newContentsLength}`
@@ -189,28 +221,43 @@
           document.getElementById('detailContent').style.display = 'block';
         }
 
-        const updateButton = document.getElementById('update');
-        if(updateButton){
-          updateButton.addEventListener('click', async (e)=>{
-            e.preventDefault()
-            // all contents as array
-            const contentsInputs = Array.from(form.contents)
-            let contents
-            if(contentsInputs.length>1){
-              contents = contentsInputs.map(item => item.value);
-            }
 
+        // update blog
+        const updateButton = document.getElementById('updateButton')
+          form.addEventListener('submit', async (e)=>{
+            e.preventDefault()
+            const formData = new FormData()
+            //contents
+            const contentsArray = form.contents
+            if(contentsArray.length>1){
+                contentsArray.forEach((content)=>{
+                formData.append('contents',content.value)
+            })
+            }else{
+                formData.append('contents',contentsArray.value)
+            }
             const endpoint = `/blogs/${updateButton.dataset.id}`
             const title = form.title.value;
             const days = form.days.value;
             const destination = form.destination.value;
             const notes = form.notes.value;
+            const images = document.querySelectorAll('input[type="file"]')
+            images.forEach((image)=>{
+              if(image.files.length>0){
+                formData.append('images',image.files[0])
+              }
+            })
+            formData.append('title',title)
+            formData.append('days',days)
+            formData.append('destination',destination)
+            formData.append('notes',notes)
+
+
 
             try{
               const res = await fetch(endpoint,{
                 method:'PATCH',
-                body:JSON.stringify({title,days,destination,contents,notes}),
-                headers:{'Content-Type':'application/json'}
+                body:formData,
               });
               if(res.ok){
                 location.assign('/')
@@ -218,10 +265,9 @@
             } catch(err){
               console.log(err)
             }
+
             })
-        }
-
-
+        
 
 
     </script>

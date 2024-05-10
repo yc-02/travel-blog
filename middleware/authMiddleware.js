@@ -42,4 +42,6 @@ const checkCurrentUser = (req,res,next)=>{
 
 }
 
+
+
 module.exports = {requireAuth, checkCurrentUser};

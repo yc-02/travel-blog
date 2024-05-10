@@ -2,24 +2,53 @@
 <body>
     <%- include('./partials/nav.ejs')%>
     <div class="createPage">
-        <form class="addForm" action="/blogs" method="POST" id="addForm">
+        <form action="/blogs" method="POST" id="addForm" enctype="multipart/form-data">
             <div id="firstStep">
                 <input name="title" placeholder="Title" class="input" type="text" required id="title"/>
                 <input name="destination" placeholder="Destination" class="input" type="text" required id="destination"/>
-                <input name="days" placeholder="Days" class="input" type="number" id="inputDays" required/>
+                <input name="days" placeholder="Days" class="input" type="number" required id="inputDays"/>
                 <button class="btn-primary" type="button" onclick="handleNext()">Next</button>
             </div>
             <div id="secondStepContainer">
-                <div id="secondStep">
-                </div>
-                <textarea  name="notes" placeholder="Notes (optional)" id="notes" class="input"></textarea>
+            <div style="display: flex; gap: 6px; justify-content: flex-end;">
                 <button class="btn-secondary" type="button" onclick="handleBack()">Back</button>
                 <button class="btn-primary">Publish</button>
+            </div>
+                <div id="secondStep">
+                </div>
+                <label class="custom-image-input">Upload Photo
+                    <i class="fa-regular fa-image fa-xl"></i>
+                    <input name="images" type="file" id="imageInput" accept="image/png,image/jpeg" class="image-input"/>
+                </label>
+                <div id="imagePreviewContainer">
+                    <img src="#" id="imagePreview" alt="imagePreview"/>
+                </div>
+                <textarea  name="notes" placeholder="Notes (optional)" class="notesTextarea"></textarea>
             </div>
         </form>
     </div>
     <script>
         const form = document.getElementById('addForm')
+
+        //preview image
+
+        const imageInput = document.getElementById('imageInput')
+        const imagePreview = document.getElementById('imagePreview')
+        const imagePreviewContainer = document.getElementById('imagePreviewContainer')
+        imageInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            if(file!==undefined){
+                imagePreviewContainer.style.display='block'
+                reader.addEventListener('load',()=>{
+                imagePreview.src = reader.result;
+              })
+              reader.readAsDataURL(file);
+            }else{
+                imagePreviewContainer.style.display='none'
+            }
+        
+        });
 
         // add new textarea
        function getTextarea(){
@@ -27,7 +56,7 @@
         const daysArray = Array(parseInt(daysValue)).fill('')
             daysArray.map((day,index)=>{
             const textarea = document.createElement("textarea")
-            textarea.id ='textarea'
+            textarea.className ='textarea'
             textarea.name='contents'
             textarea.required=true
             textarea.placeholder = `Day ${index+1}`
@@ -42,7 +71,7 @@
         const titleValue = form.title.value
         const destinationValue = form.destination.value
         const daysValue = form.days.value
-        const textarea = document.querySelectorAll("#textarea")
+        const textarea = document.querySelectorAll(".textarea")
         if(titleValue.length>0 && destinationValue.length>0 && daysValue>0){
             document.getElementById('firstStep').style.display="none"
             document.getElementById('secondStepContainer').style.display="inline-flex"
@@ -53,7 +82,7 @@
                 const newDaysArray = Array(parseInt(plusDays)).fill('')
                 newDaysArray.map((day,index)=>{
                     const newTextarea = document.createElement("textarea")
-                    newTextarea.id = 'textarea'
+                    newTextarea.className = 'textarea'
                     newTextarea.name = 'contents'
                     newTextarea.required = true;
                     newTextarea.placeholder = `Day ${parseInt(textarea.length)+index+1}`
@@ -113,6 +142,7 @@
         document.getElementById('firstStep').style.display="inline-flex"
         document.getElementById('secondStepContainer').style.display="none"
        }
+
 
     </script>
     <%- include('./partials/footer.ejs') %>

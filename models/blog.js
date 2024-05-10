@@ -25,7 +25,17 @@ const blogSchema = new Schema({
     user_id:{
         type:String,
         required:true
-    }
+    },
+    username:{
+        type:String,
+        required:true
+    },
+    images:
+    [{
+        data: Buffer,
+        contentType: String,
+        image_path:String
+    }]
 
 },{timestamps: true});
 
