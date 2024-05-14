@@ -1,12 +1,4 @@
 {
-  "name": "server",
-  "version": "1.0.0",
-  "description": "Your project description",
-  "main": "app.js",
-  "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js"
-  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
