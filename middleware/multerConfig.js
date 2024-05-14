@@ -18,24 +18,24 @@ const storage =  multer.diskStorage({
 
 const upload = multer({ storage:storage });
 
-const clearUploadsFolder = ()=>{
-    fs.readdir(`${filePath}`,(err,files)=>{
-        if(err){
-            console.log(err)
-        }
-        console.log(files)
-        files.forEach(file=>{
-            const eachPath = path.join(filePath,file)
-            fs.unlink(eachPath,(err)=>{
-                if(err){
-                    console.log(err)
-                }else{
-                    console.log('deleted')
-                }
-            })
-        })
-    })
-}
+// const clearUploadsFolder = ()=>{
+//     fs.readdir(`${filePath}`,(err,files)=>{
+//         if(err){
+//             console.log(err)
+//         }
+//         console.log(files)
+//         files.forEach(file=>{
+//             const eachPath = path.join(filePath,file)
+//             fs.unlink(eachPath,(err)=>{
+//                 if(err){
+//                     console.log(err)
+//                 }else{
+//                     console.log('deleted')
+//                 }
+//             })
+//         })
+//     })
+// }
 
 
 

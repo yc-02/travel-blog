@@ -4,7 +4,7 @@ const path = require('path');
 const {clearUploadsFolder} = require('../middleware/multerConfig')
 
 const blog_index = (req,res)=>{
-    Blog.find().sort({createdAt:-1}).limit(1)
+    Blog.find().sort({createdAt:-1}).limit(2)
     .then((result)=>{
         console.log(result)
         res.render('index',{title:'Travel Blog',blogs:result})
@@ -51,7 +51,7 @@ const blog_post = (req,res)=>{
     blog.save()
         .then(()=>{
             res.redirect('/blogs')
-            clearUploadsFolder()
+            // clearUploadsFolder()
 
         })
         .catch((err)=>{
@@ -121,7 +121,7 @@ const blog_update = (req,res)=>{
                 .then((result)=>{
                     console.log(result)
                     res.status(200).json({ message: 'Blog updated!' })
-                    clearUploadsFolder()
+                    // clearUploadsFolder()
                 })
                 .catch((err)=>{
                     console.log(err)
