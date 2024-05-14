@@ -3,6 +3,7 @@
     <%- include('./partials/nav.ejs')%>
     <div class="createPage">
         <form action="/blogs" method="POST" id="addForm" enctype="multipart/form-data">
+            <p style="margin-bottom: 50px;">Add New Post</p>
             <div id="firstStep">
                 <input name="title" placeholder="Title" class="input" type="text" required id="title"/>
                 <input name="destination" placeholder="Destination" class="input" type="text" required id="destination"/>
@@ -23,7 +24,7 @@
                 <div id="imagePreviewContainer">
                     <img src="#" id="imagePreview" alt="imagePreview"/>
                 </div>
-                <textarea  name="notes" placeholder="Notes (optional)" class="notesTextarea"></textarea>
+                <!-- <textarea  name="notes" placeholder="Notes (optional)" class="notesTextarea"></textarea> -->
             </div>
         </form>
     </div>
