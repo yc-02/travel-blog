@@ -6,7 +6,7 @@ const {clearUploadsFolder} = require('../middleware/multerConfig')
 const blog_index = (req,res)=>{
     Blog.find().sort({createdAt:-1})
     .then((result)=>{
-        res.render('index',{title:'Travel Blog',blogs:result})
+        res.render('blogs',{title:'Travel Blog',blogs:result})
     })
     .catch((err)=>{
         console.log(err)
