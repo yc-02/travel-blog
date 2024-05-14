@@ -4,7 +4,7 @@ const path = require('path');
 const {clearUploadsFolder} = require('../middleware/multerConfig')
 
 const blog_index = (req,res)=>{
-    Blog.find().sort({createdAt:-1})
+    Blog.find().sort({createdAt:-1}).limit(4)
     .then((result)=>{
         res.render('index',{title:'Travel Blog',blogs:result})
     })
