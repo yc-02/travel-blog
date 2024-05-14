@@ -54,10 +54,12 @@
               <i class="fa-regular fa-image fa-xl"></i>
               <input name="images" type="file" id="editImageInput" accept="image/png,image/jpeg" class="image-input"/>
             </label>
+            <% if(blog.images && blog.images.length > 0 && blog.images[0].data){ %>
             <div id="editImageContainer">
               <img src="data:image/<%=blog.images.contentType%>;base64,<%=blog.images[0].data.toString('base64')%>"  id="editImage" alt="imagePreview" 
               data-src="data:image/<%=blog.images.contentType%>;base64,<%=blog.images[0].data.toString('base64')%>"/>
             </div>
+          <%}%>
               <textarea  name="notes" placeholder="Notes (optional)" class="notesTextarea"></textarea>
           </div>
       </form>

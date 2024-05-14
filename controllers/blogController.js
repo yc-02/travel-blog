@@ -120,6 +120,7 @@ const blog_update = (req,res)=>{
                 .then((result)=>{
                     console.log(result)
                     res.status(200).json({ message: 'Blog updated!' })
+                    clearUploadsFolder()
                 })
                 .catch((err)=>{
                     console.log(err)

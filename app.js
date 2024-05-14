@@ -1,6 +1,7 @@
 const express =require ('express')
 const mongoose = require('mongoose')
 const morgan = require('morgan')
+const path = require('path');
 const blogRoutes = require('./routes/blogRoutes')
 const authRoutes = require('./routes/authRoutes')
 const cookieParser = require('cookie-parser')
@@ -18,12 +19,13 @@ mongoose.connect(uri)
 
 
 
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 app.use(cookieParser())
 app.use(morgan('dev'))
 app.set('view engine','ejs')
+app.set('views', path.join(__dirname, 'views'));
 
 app.get('*',checkCurrentUser);
 
