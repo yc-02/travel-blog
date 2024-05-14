@@ -1,12 +1,11 @@
 const Blog = require('../models/blog');
 const fs = require('fs');
 const path = require('path');
-const {clearUploadsFolder} = require('../middleware/multerConfig')
+// const {clearUploadsFolder} = require('../middleware/multerConfig')
 
 const blog_index = (req,res)=>{
-    Blog.find().sort({createdAt:-1}).limit(2)
+    Blog.find().sort({createdAt:-1})
     .then((result)=>{
-        console.log(result)
         res.render('index',{title:'Travel Blog',blogs:result})
     })
     .catch((err)=>{
@@ -33,12 +32,11 @@ const blog_post = (req,res)=>{
     obj.username = currentUser.username
     const imageObjects = [];
     req.files.forEach(file => {
-    const imagePath = path.join('./public/uploads/', file.filename);
+    const imagePath = path.join('/uploads/', file.filename);
     try {
-        const imageData = fs.readFileSync(imagePath);
+        // const imageData = fs.readFileSync(imagePath);
         const imageObject = {
-            data: imageData,
-            contentType: file.mimetype,
+            // contentType: file.mimetype,
             image_path:imagePath
         };
         imageObjects.push(imageObject);
@@ -95,12 +93,12 @@ const blog_update = (req,res)=>{
     const imageObjects = [];
     if(req.files.length>0){
         req.files.forEach(file => {
-            const imagePath = path.join('./public/uploads/', file.filename);
+            const imagePath = path.join('/uploads/', file.filename);
             try {
-                const imageData = fs.readFileSync(imagePath);
+                // const imageData = fs.readFileSync(imagePath);
                 const imageObject = {
-                    data: imageData,
-                    contentType: file.mimetype,
+                    // data: imageData,
+                    // contentType: file.mimetype,
                     image_path:imagePath
                 };
                 imageObjects.push(imageObject);

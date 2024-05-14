@@ -11,22 +11,23 @@ const storage =  multer.diskStorage({
         cb(null, filePath);
     },
     filename: function (req, file, cb) {
-        const fileName = file.fieldname+Date.now()
+        const fileExtension = path.extname(file.originalname);
+        const fileName = file.fieldname+Date.now()+fileExtension
         cb(null, fileName);
     },
 })
 
 const upload = multer({ storage:storage });
 
-// const clearUploadsFolder = ()=>{
-//     fs.readdir(`${filePath}`,(err,files)=>{
+// const deleteUploadsImage = (image_path)=>{
+//     fs.readdir(`${image_path}`,(err,files)=>{
 //         if(err){
 //             console.log(err)
 //         }
 //         console.log(files)
 //         files.forEach(file=>{
-//             const eachPath = path.join(filePath,file)
-//             fs.unlink(eachPath,(err)=>{
+//             // const eachPath = path.join(filePath,file)
+//             fs.unlink(file,(err)=>{
 //                 if(err){
 //                     console.log(err)
 //                 }else{
@@ -39,4 +40,4 @@ const upload = multer({ storage:storage });
 
 
 
-module.exports = {upload,clearUploadsFolder}
+module.exports = {upload}

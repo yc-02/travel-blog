@@ -32,8 +32,8 @@ const blogSchema = new Schema({
     },
     images:
     [{
-        data: Buffer,
-        contentType: String,
+        // data: Buffer,
+        // contentType: String,
         image_path:String
     }]
 

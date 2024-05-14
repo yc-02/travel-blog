@@ -6,8 +6,8 @@
             <div class="blogCard">
             <% blogs.forEach(blog=>{%>
                 <a href="/blogs/<%=blog._id%>">
-                <% if(blog.images && blog.images.length > 0 && blog.images[0].data){ %>
-                    <img src="data:image/<%=blog.images.contentType%>;base64,<%=blog.images[0].data.toString('base64')%>" class="blogImage" alt="image"/>
+                <% if(blog.images){ %>
+                    <img src="<%=blog.images[0].image_path%>" class="blogImage" alt="image"/>
                 <% } %>
                 <div class="blogText">
                     <h3 class="title"><%= blog.title %></h3>
