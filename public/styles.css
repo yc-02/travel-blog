@@ -1,17 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Laila:wght@300;400;500;600;700&family=Short+Stack&display=swap');
 body{
     margin: 0;
-    padding: 0;
     font-family: "Balsamiq Sans", sans-serif;
     background-color: #ecfdf5;
     position: relative;
-    min-height: 95vh;
-    padding:0px 30px;
-    padding-bottom: 60px;
+    min-height: 100vh;
     overflow-x: hidden;
-    
 }
 
+.detailPage,.homePage,.createPage{
+    padding:20px 30px;
+}
 a{
     text-decoration: none;
     color: inherit;
@@ -29,7 +28,7 @@ p{
 }
 /* navbar */
 
-nav{
+.navbar{
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -38,12 +37,12 @@ nav{
     border-radius: 20px;
 }
 
-nav ul{
+.webNav{
     display: flex;
     align-items: center;
     gap: 13px;
 }
-.webNav{
+.webNav-right{
     display: flex;
     align-items: center;
     gap: 13px;
@@ -51,6 +50,7 @@ nav ul{
 .smNav{
     display: none;
 }
+
 
 
 .btn-auth{
@@ -74,7 +74,7 @@ nav ul{
 /* footer */
 footer{
     position: absolute;
-    bottom: 0;
+    bottom: -20px;
     width: 100%;
     text-align: center;
     color: dimgray;
@@ -87,10 +87,6 @@ footer{
 
 /* homepage */
 
-.homePage{
-    padding:30px 0;
-    margin: 0;
-}
 
 .blogCard{
     display: grid;
@@ -235,17 +231,16 @@ footer{
 
 /* details page */
 .detailPage{
-    display: inline-flex;
-    width: 100%;
+    display: flex;
     justify-content: center;
+
 }
 .detailContainer{
     display: flex;
-    flex-direction: column;
-    width:1100px;    
-    padding:30px;
-    background-color: #ecfdf5;
+    flex-direction: column; 
     border-radius: 20px;
+    padding: 10px;
+    max-width: 1100px;
 }
 
 #newTextarea{
@@ -258,7 +253,8 @@ footer{
 #updateForm{
     display: none;
     flex-direction: column;
-    gap:9px
+    gap:9px;
+    width: 500px;
 }
 #originalContents, #newContents, .contentsContainer{
     display: flex; 
@@ -302,19 +298,87 @@ footer{
         flex-direction: column;
     }
 
-    .detailsPage{
-        max-width: 90vw;
-    }
+}
+
+@media(max-width:700px){
     .webNav{
         display: none;
     }
-    nav{
-        padding: 30px 10px;
-        
-    }
     .smNav{
-        display: flex;
+        display: block;
         cursor: pointer;
     }
+    body{
+        margin-bottom: 100px;
+        padding: 0;
+    }
+    .detailPage,.homePage,.createPage{
+        padding:10px 20px;
+    }
+    #secondStepContainer,#updateForm{
+        width: 80vw;
+    }
+    .blogText{
+        margin: 0;
+    }
+    .blogText h3{
+        margin: 0;
+        font-size: 18px;
+    }
+    .blogText p{
+        margin: 3px;
+        font-size: 15px;
+    }
+    .navbar{
+        margin: 0;
+    }
+    .smNavContents{
+        display: none;
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100vh;
+        width: 100%;
+    }
+    .smNav-left{
+        width: 50%;
+        opacity: 0.5;
+    }
+    .smNav-right{
+        position: relative;
+        display: flex;
+        width: 50%;
+        flex-direction: column;
+        background-color: white;
+        align-items:end;
+        padding:30px;
+       
+    }
+    .smNav-right-contents{
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
+        font-size: 18px;
+    }
+    .close-smNav{
+        position: absolute;
+        left: 0;
+        top: 0;
+        padding: 10px;
+        cursor: pointer;
 
+
+    }
+
+}
+
+@keyframes slideIn {
+    from {width: 0;}
+    to {width: 100%;}
+    
+}
+@keyframes opacity {
+    from {background-color: inherit;}
+    to {background-color: black;}
+    
 }

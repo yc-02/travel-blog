@@ -1,23 +1,82 @@
 <nav>
+    <div class="navbar">
         <a href="/" class="navTitle">Travel Blog</a>
-        <!-- <li><a href="/about">About</a></li>
-        <li><a href="/contact">Contact</a></li> -->
-    <ul>
+    <ul class="webNav">
         <% if(user){ %>
-            <li class="greet">Hello,<%= user.username %></li>
+            <li class="greet">Hello, <%= user.username %></li>
         <% } %>
-        <div class="webNav">
+        <div class="webNav-right">
             <% if(user){ %>
                 <li><a href="/create" class="btn-auth">Add New Post</a></li>
                 <li><a href="/auth/logout" class="btn-auth">Log out</a></li>
             <% }else{ %>
                 <li><a href="/auth/login" class="btn-auth">Log in</a></li>
             <% } %> 
-
-        </div>
-        <div class="smNav">
-            <i class="fa-solid fa-bars fa-xl"></i>
         </div>
     </ul>
-    
+    <div class="smNav">
+        <div onclick="openNav()">
+            <i class="fa-solid fa-bars fa-xl"></i>
+        </div>
+        <div class="smNavContents">
+            <div class="smNav-left" onclick="closeNav()">
+            </div>
+            <div class="smNav-right">
+                <div class="close-smNav" onclick="closeNav()">
+                    <i class="fa-solid fa-xmark fa-xl"></i>
+                </div>
+                <div class="smNav-right-contents">
+                    <% if(user){ %>
+                        <li>Hello, <%= user.username %></li>
+                    <% } %>
+
+                    <li>
+                        <a href="/" class="sm-btn">
+                            <i class="fa-solid fa-house"></i>
+                            Home
+                        </a>
+                    </li>
+                    <% if(user){ %>
+                        <li>
+                            <a href="/create" class="sm-btn">
+                                <i class="fa-solid fa-circle-plus"></i>
+                                Add New Post
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/auth/logout" class="sm-btn">
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                                Log out
+                            </a>
+                        </li>
+                    <% }else{ %>
+                        <li>
+                            <a href="/auth/login" class="sm-btn">
+                            <i class="fa-solid fa-right-to-bracket"></i>
+                            Log in
+                            </a>
+                        </li>
+                    <% } %> 
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script>
+ 
+        function openNav() {
+            document.querySelector(".smNavContents").style.display='flex'
+            document.body.style.overflow = "hidden";
+            document.querySelector(".smNavContents").style.animation = 'slideIn 0.2s forwards';
+            document.querySelector(".smNav-left").style.animation = 'opacity 0.2s 0.2s forwards';
+        }
+
+        function closeNav(){
+            document.querySelector(".smNavContents").style.display ='none'
+            document.body.style.overflow = "scroll";
+
+        }
+
+
+    </script>
 </nav>
