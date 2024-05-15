@@ -7,8 +7,8 @@
             <% blogs.forEach(blog=>{%>
                 <a href="/blogs/<%=blog._id%>">
                 <% if(blog.images && blog.images.length>0){ %>
-                    <div style="width: 50%; height: 100%;" class="loading">
-                        <p style="text-align: center;">Loading...</p>
+                    <div style="width: 50%; height: 100%; display: flex; align-items: center; justify-content: center;" class="loading">
+                        <p>Loading...</p>
                     </div>
                     <img src="<%=blog.images[0].image_path%>" class="blogImage" style="display: none;" alt="image" onload="imageLoaded()"/>
                 <% } %>
@@ -41,12 +41,14 @@
         // Preload the actual image
         function imageLoaded() {
             console.log('loaded')
-                loading.forEach(load=>{
+                setTimeout(()=>{
+                    loading.forEach(load=>{
                     load.style.display='none'
                 })
                 blogImage.forEach(image=>{
                     image.style.display='block'
                 })
+            },50)
         };
 
     </script>
