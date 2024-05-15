@@ -50,18 +50,27 @@
               </div>
               <div id="newContents"></div>
             </div>
-            <label class="custom-image-input">Change Photo
-              <i class="fa-regular fa-image fa-xl"></i>
-              <input name="images" type="file" id="editImageInput" accept="image/png,image/jpeg" class="image-input"/>
-            </label>
-            <% if(blog.images && blog.images.length > 0){ %>
-            <div id="editImageContainer">
-              <img src="<%=blog.images[0].image_path%>"  class="editImage" alt="imagePreview" 
-              data-src="<%=blog.images[0].image_path%>"/>
+            <div class="image-container">
+              <% if(blog.images && blog.images.length > 0){ %>
+                <label class="custom-image-input">Change Photo
+                  <i class="fa-regular fa-image fa-xl"></i>
+                  <input name="images" type="file" accept="image/png,image/jpeg" class="image-input"/>
+                </label>
+              <div class="editImageContainer">
+                <img src="<%=blog.images[0].image_path%>"  class="editImage" alt="imagePreview" 
+                data-src="<%=blog.images[0].image_path%>"/>
+              </div>
+            <%}else{%>
+              <label class="custom-image-input">Add Photo
+                <i class="fa-regular fa-image fa-xl"></i>
+                <input name="images" type="file" accept="image/png,image/jpeg" class="image-input"/>
+              </label>
+              <div class="editImageContainer" style="display: none;">
+                <img src="" class="editImage" alt="imagePreview"/>
+              </div>
+            <%}%>
+
             </div>
-          <%}else{%>
-            <img  class="editImage" alt="No image uploaded" />
-          <%}%>
             <textarea  name="notes" placeholder="Notes (optional)" class="notesTextarea"></textarea>
       </form>
       </div>
@@ -91,13 +100,14 @@
 
 
       // handle update image
-      const imageInput = document.getElementById('editImageInput')
+        const imageInput = document.querySelector('.image-input')
         const imagePreview = document.querySelector('.editImage')
-        const imagePreviewContainer = document.getElementById('editImageContainer')
+        const imageContainer = document.querySelector('.editImageContainer')
         imageInput.addEventListener('change', function(event) {
             const file = event.target.files[0];
             const reader = new FileReader();
             if(file!==undefined){
+              imageContainer.style.display='block'
               reader.addEventListener('load',()=>{
                 imagePreview.src = reader.result;
               })

@@ -13,12 +13,15 @@
             <div id="secondStepContainer">
                 <div id="secondStep">
                 </div>
-                <label class="custom-image-input">Upload Photo
-                    <i class="fa-regular fa-image fa-xl"></i>
-                    <input name="images" type="file" id="imageInput" accept="image/png,image/jpeg" class="image-input"/>
-                </label>
-                <div id="imagePreviewContainer">
-                    <img src="#" id="imagePreview" alt="imagePreview"/>
+                <div class="image-container">
+                    <label class="custom-image-input">
+                        <span id="imageLabel">Upload Photo</span>
+                        <i class="fa-regular fa-image fa-xl"></i>
+                        <input name="images" type="file" id="imageInput" accept="image/png,image/jpeg" class="image-input"/>
+                    </label>
+                    <div id="imagePreviewContainer">
+                        <img src="#" id="imagePreview" alt="imagePreview"/>
+                    </div>
                 </div>
                 <textarea  name="notes" placeholder="Notes (optional)" class="notesTextarea"></textarea>
                 <div style="display: flex; flex-direction: column; gap: 6px; align-items: end;">
@@ -38,10 +41,12 @@
         const imageInput = document.getElementById('imageInput')
         const imagePreview = document.getElementById('imagePreview')
         const imagePreviewContainer = document.getElementById('imagePreviewContainer')
+        const imageLabel = document.getElementById('imageLabel')
         imageInput.addEventListener('change', function(event) {
             const file = event.target.files[0];
             const reader = new FileReader();
             if(file!==undefined){
+                imageLabel.innerText='Change Photo'
                 imagePreviewContainer.style.display='block'
                 reader.addEventListener('load',()=>{
                 imagePreview.src = reader.result;
@@ -49,6 +54,7 @@
               reader.readAsDataURL(file);
             }else{
                 imagePreviewContainer.style.display='none'
+                imageLabel.innerText='Upload Photo'
             }
         
         });
