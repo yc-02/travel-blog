@@ -6,7 +6,7 @@
             <div class="blogCard">
             <% blogs.forEach(blog=>{%>
                 <a href="/blogs/<%=blog._id%>">
-                <% if(blog.images){ %>
+                <% if(blog.images && blog.images.length>0){ %>
                     <img src="<%=blog.images[0].image_path%>" class="blogImage" alt="image"/>
                 <% } %>
                 <div class="blogText">

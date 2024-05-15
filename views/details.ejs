@@ -4,15 +4,15 @@
     <div class="detailPage">
       <div class="detailContainer">
         <div id="detailContent">
-          <div style="display: flex; justify-content:space-between; align-items: center;">
+          <div>
             <h2><%= blog.title %> <span style="display: block; font-size: 18px;"><%= blog.destination %></span></h2>
            <% if(user && user._id.toString() === blog.user_id.toString()){ %>
-            <div style="display: inline-flex; gap: 6px;">
-              <div class="btn-secondary" onclick="editBlog()">
-                Edit
+            <div style="display: inline-flex; gap: 6px; align-items: center;">
+              <div onclick="editBlog()" class="btn-details">
+                <i class="fa-solid fa-pen-to-square fa-lg" style="color: rgb(9, 39, 9);"></i>
               </div>
-              <a id="deleteButton" data-id="<%= blog._id %>" class="btn-secondary">
-                Delete
+              <a id="deleteButton" data-id="<%= blog._id %>" class="btn-details">
+                <i class="fa-solid fa-trash fa-lg" style="color: rgb(144, 25, 45);"></i>
               </a>
             </div>
            <% } %>
@@ -56,11 +56,13 @@
             </label>
             <% if(blog.images && blog.images.length > 0){ %>
             <div id="editImageContainer">
-              <img src="<%=blog.images[0].image_path%>"  id="editImage" alt="imagePreview" 
+              <img src="<%=blog.images[0].image_path%>"  class="editImage" alt="imagePreview" 
               data-src="<%=blog.images[0].image_path%>"/>
             </div>
+          <%}else{%>
+            <img  class="editImage" alt="No image uploaded" />
           <%}%>
-              <textarea  name="notes" placeholder="Notes (optional)" class="notesTextarea"></textarea>
+            <textarea  name="notes" placeholder="Notes (optional)" class="notesTextarea"></textarea>
       </form>
       </div>
     </div>
@@ -90,7 +92,7 @@
 
       // handle update image
       const imageInput = document.getElementById('editImageInput')
-        const imagePreview = document.getElementById('editImage')
+        const imagePreview = document.querySelector('.editImage')
         const imagePreviewContainer = document.getElementById('editImageContainer')
         imageInput.addEventListener('change', function(event) {
             const file = event.target.files[0];
@@ -101,7 +103,11 @@
               })
               reader.readAsDataURL(file);
             }else{
-              imagePreview.src=imagePreview.dataset.src
+              if(imagePreview.dataset.src){
+                imagePreview.src=imagePreview.dataset.src
+              }else{
+                imagePreview.src=''
+              }
             }
 
         

@@ -4,7 +4,7 @@ body{
     font-family: "Balsamiq Sans", sans-serif;
     background-color: #ecfdf5;
     position: relative;
-    min-height: 100vh;
+    min-height: 90vh;
     overflow-x: hidden;
 }
 
@@ -74,7 +74,7 @@ p{
 /* footer */
 footer{
     position: absolute;
-    bottom: -20px;
+    bottom: -10vh;
     width: 100%;
     text-align: center;
     color: dimgray;
@@ -121,11 +121,13 @@ footer{
 }
 
 #addForm{
+    margin-top: 30px;
     display: inline-flex;
     flex-direction: column;
     min-height: 50vh;
     justify-content: center;
-    margin-top: 30px;
+    margin-bottom: 50px;
+
 }
 
 #firstStep{
@@ -167,10 +169,10 @@ footer{
 
 }
 
-.btn-primary, .btn-secondary{
+.btn-primary, .btn-secondary,.btn-next{
     border:none;
     border-radius: 10px;
-    background-color: #022c22;
+    background-color: #034032;
     padding:13px;
     font-size: 16px;
     font-weight: 500;
@@ -178,8 +180,8 @@ footer{
     cursor: pointer;
 }
 
-.btn-primary:hover{
-    background-color: #064e3b;
+.btn-primary:hover, .btn-next:hover{
+    background-color: #075b44;
 }
 
 .btn-secondary{
@@ -209,7 +211,7 @@ footer{
     border-radius: 10px;
     overflow: hidden;
 }
-#imagePreview,#editImage{
+#imagePreview,.editImage{
     height: 100%;
     width: 100%;
     object-fit: cover;
@@ -261,6 +263,11 @@ footer{
     flex-direction: column; 
     gap: 9px;
 }
+.btn-details{
+    padding: 6px;
+    cursor: pointer;
+}
+
 /* auth page */
 
 .signupPage, .loginPage{
@@ -369,7 +376,6 @@ footer{
 
 
     }
-
 }
 
 @keyframes slideIn {

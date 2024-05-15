@@ -3,18 +3,14 @@
     <%- include('./partials/nav.ejs')%>
     <div class="createPage">
         <form action="/blogs" method="POST" id="addForm" enctype="multipart/form-data">
-            <p style="margin-bottom: 50px;">Add New Post</p>
             <div id="firstStep">
+                <p style="margin-bottom: 50px;">Add New Post</p>
                 <input name="title" placeholder="Title" class="input" type="text" required id="title"/>
                 <input name="destination" placeholder="Destination" class="input" type="text" required id="destination"/>
                 <input name="days" placeholder="Days" class="input" type="number" required id="inputDays"/>
-                <button class="btn-primary" type="button" onclick="handleNext()">Next</button>
+                <button class="btn-secondary" type="button" onclick="handleNext()">Next</button>
             </div>
             <div id="secondStepContainer">
-            <div style="display: flex; gap: 6px; justify-content: flex-end;">
-                <button class="btn-secondary" type="button" onclick="handleBack()">Back</button>
-                <button class="btn-primary">Publish</button>
-            </div>
                 <div id="secondStep">
                 </div>
                 <label class="custom-image-input">Upload Photo
@@ -24,7 +20,13 @@
                 <div id="imagePreviewContainer">
                     <img src="#" id="imagePreview" alt="imagePreview"/>
                 </div>
-                <!-- <textarea  name="notes" placeholder="Notes (optional)" class="notesTextarea"></textarea> -->
+                <textarea  name="notes" placeholder="Notes (optional)" class="notesTextarea"></textarea>
+                <div style="display: flex; flex-direction: column; gap: 6px; align-items: end;">
+                    <button onclick="handleBack()" class="btn-secondary" style="width: 50%;" type="button">
+                        Back
+                    </button>
+                    <button class="btn-primary" type="submit" style="width: 50%;">Publish</button>
+                </div>
             </div>
         </form>
     </div>
