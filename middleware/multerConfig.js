@@ -1,5 +1,4 @@
 const multer  = require('multer');
-const fs = require('fs');
 const path = require('path');
 
 
@@ -19,24 +18,6 @@ const storage =  multer.diskStorage({
 
 const upload = multer({ storage:storage });
 
-// const deleteUploadsImage = (image_path)=>{
-//     fs.readdir(`${image_path}`,(err,files)=>{
-//         if(err){
-//             console.log(err)
-//         }
-//         console.log(files)
-//         files.forEach(file=>{
-//             // const eachPath = path.join(filePath,file)
-//             fs.unlink(file,(err)=>{
-//                 if(err){
-//                     console.log(err)
-//                 }else{
-//                     console.log('deleted')
-//                 }
-//             })
-//         })
-//     })
-// }
 
 
 

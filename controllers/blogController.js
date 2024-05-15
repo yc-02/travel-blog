@@ -1,7 +1,6 @@
 const Blog = require('../models/blog');
-const fs = require('fs');
 const path = require('path');
-// const {clearUploadsFolder} = require('../middleware/multerConfig')
+const {deleteUploadsImage} = require('../public/delete_image')
 
 const blog_index = (req,res)=>{
     Blog.find().sort({createdAt:-1})
@@ -34,9 +33,7 @@ const blog_post = (req,res)=>{
     req.files.forEach(file => {
     const imagePath = path.join('/uploads/', file.filename);
     try {
-        // const imageData = fs.readFileSync(imagePath);
         const imageObject = {
-            // contentType: file.mimetype,
             image_path:imagePath
         };
         imageObjects.push(imageObject);
@@ -49,7 +46,6 @@ const blog_post = (req,res)=>{
     blog.save()
         .then(()=>{
             res.redirect('/blogs')
-            // clearUploadsFolder()
 
         })
         .catch((err)=>{
@@ -69,6 +65,7 @@ const blog_delete = (req,res)=>{
                 Blog.findByIdAndDelete(id)
                     .then(()=>{
                         res.status(200).json({ message: 'Blog post deleted successfully' })
+                        deleteUploadsImage(result.images)
                     })
                     .catch((err)=>{
                         console.log(err)
@@ -95,10 +92,7 @@ const blog_update = (req,res)=>{
         req.files.forEach(file => {
             const imagePath = path.join('/uploads/', file.filename);
             try {
-                // const imageData = fs.readFileSync(imagePath);
                 const imageObject = {
-                    // data: imageData,
-                    // contentType: file.mimetype,
                     image_path:imagePath
                 };
                 imageObjects.push(imageObject);
@@ -115,11 +109,12 @@ const blog_update = (req,res)=>{
     Blog.findById(id)
     .then((result)=>{
         if(result.user_id.toString() === currentUser._id.toString() ){
+            if(imageObjects.length!==0){
+                deleteUploadsImage(result.images)
+            }
             Blog.findOneAndUpdate(filter,update,{new:true})
                 .then((result)=>{
-                    console.log(result)
                     res.status(200).json({ message: 'Blog updated!' })
-                    // clearUploadsFolder()
                 })
                 .catch((err)=>{
                     console.log(err)
