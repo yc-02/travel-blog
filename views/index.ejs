@@ -1,14 +1,13 @@
     <%- include('./partials/head.ejs') %>
 <body>
     <%- include('./partials/nav.ejs')%>
-    <div class="homePage">
+    <div class="homePage"  style="display: none;">
         <% if (blogs.length>0){ %>
             <div class="blogCard">
             <% blogs.forEach(blog=>{%>
                 <a href="/blogs/<%=blog._id%>">
-                <img src="/uploads/preload.png" class="preloadImage" alt="image"/>
                 <% if(blog.images && blog.images.length>0){ %>
-                    <img src="<%=blog.images[0].image_path%>" class="blogImage" alt="image" style="display: none;" onload="imageLoaded()"/>
+                    <img src="<%=blog.images[0].image_path%>" class="blogImage" alt="image" onload="imageLoaded()"/>
                 <% } %>
                 <div class="blogText">
                     <h3 class="title"><%= blog.title %></h3>
@@ -31,22 +30,20 @@
             <p style="text-align: center;">No Contents Available.</p>
         <% } %>
     </div>
+    <p style="text-align: center;" id="loading">Loading...</p>
     <%- include('./partials/footer.ejs') %>
     <script>
-        const actualImage = document.querySelectorAll('.blogImage');
-        const preloadImage = document.querySelectorAll('.preloadImage')
+        const homePage = document.querySelector('.homePage');
+        const loading = document.getElementById('loading')
 
         // Preload the actual image
         function imageLoaded() {
             console.log('loaded')
-            preloadImage.forEach(image=>{
-                image.style.display="none"
-            })
-            actualImage.forEach(image=>{
-                image.style.display='block'
-            })
+            setTimeout(()=>{
+                homePage.style.display='block'
+                loading.style.display='none'
+            },100)
         };
-
 
     </script>
 </body>
