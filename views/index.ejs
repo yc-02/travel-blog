@@ -6,8 +6,9 @@
             <div class="blogCard">
             <% blogs.forEach(blog=>{%>
                 <a href="/blogs/<%=blog._id%>">
+                <img src="/uploads/preload.png" class="preloadImage" alt="image"/>
                 <% if(blog.images && blog.images.length>0){ %>
-                    <img src="<%=blog.images[0].image_path%>" class="blogImage" alt="image"/>
+                    <img src="<%=blog.images[0].image_path%>" class="blogImage" alt="image" style="display: none;" onload="imageLoaded()"/>
                 <% } %>
                 <div class="blogText">
                     <h3 class="title"><%= blog.title %></h3>
@@ -31,5 +32,22 @@
         <% } %>
     </div>
     <%- include('./partials/footer.ejs') %>
+    <script>
+        const actualImage = document.querySelectorAll('.blogImage');
+        const preloadImage = document.querySelectorAll('.preloadImage')
+
+        // Preload the actual image
+        function imageLoaded() {
+            console.log('loaded')
+            preloadImage.forEach(image=>{
+                image.style.display="none"
+            })
+            actualImage.forEach(image=>{
+                image.style.display='block'
+            })
+        };
+
+
+    </script>
 </body>
 </html>
