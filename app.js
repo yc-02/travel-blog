@@ -10,7 +10,7 @@ require('dotenv').config()
 const app = express()
 
 
-const uri =`mongodb+srv://yingcui02:cuiying@cluster0.toa8pga.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
+const uri =`mongodb+srv://${process.env.username}:${process.env.password}@cluster0.toa8pga.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
 
 mongoose.connect(uri)
     .then((result)=>app.listen(3000))
