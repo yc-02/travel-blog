@@ -1,6 +1,10 @@
 const Blog = require('../models/blog');
 const path = require('path');
-const {deleteUploadsImage} = require('../public/delete_image')
+const fs = require('fs');
+const {storage} =require('../config/firebaseConfig');
+const { uploadBytes, ref, getDownloadURL, deleteObject } = require('firebase/storage');
+
+
 
 const blog_index = (req,res)=>{
     Blog.find().sort({createdAt:-1})
@@ -30,27 +34,61 @@ const blog_post = (req,res)=>{
     obj.user_id = currentUser._id
     obj.username = currentUser.username
     const imageObjects = [];
-    req.files.forEach(file => {
-    const imagePath = path.join('/uploads/', file.filename);
-    try {
-        const imageObject = {
-            image_path:imagePath
-        };
-        imageObjects.push(imageObject);
-    } catch (error) {
-        console.error('Error reading image file:', error);
-    }
-    });
-    obj.images = imageObjects;
-    const blog = new Blog(obj)
-    blog.save()
-        .then(()=>{
-            res.redirect('/blogs')
 
-        })
-        .catch((err)=>{
-            console.log(err)
-        })
+
+    //if image uploated
+    if(req.files.length>0){
+        req.files.forEach(file => {
+            //firebase ref metadata
+            const storageRef = ref(storage,`${currentUser._id}/${Date.now()+file.originalname}`)
+            const metadata = { contentType:file.mimetype }
+            const fullPath = storageRef.fullPath
+        try {
+            //upload image to firebase bucket
+            uploadBytes(storageRef,file.buffer,metadata)
+                .then((snapshot)=>{
+                    getDownloadURL(ref(storage,fullPath))
+                        .then((url)=>{
+                             const imageObject = {
+                                 image_path:url,
+                                 full_path:fullPath
+                             }
+                             imageObjects.push(imageObject);
+                        })
+                        .then(()=>{
+                            obj.images = imageObjects;
+                            const blog = new Blog(obj)
+                            blog.save()
+                                .then(()=>{
+                                    res.redirect('/blogs')
+                        
+                                })
+                                .catch((err)=>{
+                                    console.log(err)
+                                })
+                        })
+                })
+                .catch(error=>{
+                console.log(error)
+                })
+        } catch (error) {
+            console.error('Error reading image file:', error);
+        }
+        });
+        
+    }else{
+        const blog = new Blog(obj)
+        blog.save()
+            .then(()=>{
+                res.redirect('/blogs')
+    
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+
+    }
+
 }
 
 
@@ -65,7 +103,15 @@ const blog_delete = (req,res)=>{
                 Blog.findByIdAndDelete(id)
                     .then(()=>{
                         res.status(200).json({ message: 'Blog post deleted successfully' })
-                        deleteUploadsImage(result.images)
+                        result.images.forEach(image=>{
+                            const desertRef = ref(storage,image.full_path)
+                            deleteObject(desertRef).then(()=>{
+                                console.log('deleted')
+                            }).catch(err=>{
+                                console.log(err)
+                            })
+                        })
+            
                     })
                     .catch((err)=>{
                         console.log(err)
@@ -85,40 +131,71 @@ const blog_update = (req,res)=>{
     const id = req.params.id
     const currentUser = res.locals.user
     const update = req.body
-
+    const filter = {_id:id}
     // image files
     const imageObjects = [];
-    if(req.files.length>0){
-        req.files.forEach(file => {
-            const imagePath = path.join('/uploads/', file.filename);
-            try {
-                const imageObject = {
-                    image_path:imagePath
+
+    //update blog
+    Blog.findById(id).then((result)=>{
+        if(result.user_id.toString() === currentUser._id.toString()){
+            //if update image
+            if(req.files.length>0){
+                //delete old images
+                if(result.images.length>0){
+                    result.images.forEach(image=>{
+                        const desertRef = ref(storage,image.full_path)
+                        deleteObject(desertRef).then(()=>{
+                            console.log('deleted')
+                        }).catch(err=>{
+                            console.log(err)
+                        })
+                    })
+                }
+                //upload images        
+                req.files.forEach(file => {
+
+                //firebase ref metadata
+                const storageRef = ref(storage,`${currentUser._id}/${Date.now()+file.originalname}`)
+                const metadata = { contentType:file.mimetype }
+                const fullPath = storageRef.fullPath
+                try {
+                    uploadBytes(storageRef,file.buffer,metadata)
+                        .then((snapshot)=>{
+                            getDownloadURL(ref(storage,fullPath))
+                                .then((url)=>{
+                                    const imageObject = {
+                                        image_path:url,
+                                        full_path:fullPath
+                                    }
+                                    imageObjects.push(imageObject);
+                                })
+                                .then(()=>{
+                                    update.images = imageObjects;
+                                    Blog.findOneAndUpdate(filter,update,{new:true})
+                                    .then((result)=>{
+                                        res.status(200).json({ message: 'Blog updated!' })
+                                        
+                                    })
+                                    .catch((err)=>{
+                                        console.log(err)
+                                    })
+                                })
+                        })
+                }catch (error) {
+                    console.error('Error reading image file:', error);
                 };
-                imageObjects.push(imageObject);
-            } catch (error) {
-                console.error('Error reading image file:', error);
-            }
-            });
-            update.images = imageObjects;
-    }
-
-
-    //update filter
-    const filter = {_id:id}
-    Blog.findById(id)
-    .then((result)=>{
-        if(result.user_id.toString() === currentUser._id.toString() ){
-            if(imageObjects.length!==0){
-                deleteUploadsImage(result.images)
-            }
-            Blog.findOneAndUpdate(filter,update,{new:true})
+                });
+            }else{
+                Blog.findOneAndUpdate(filter,update,{new:true})
                 .then((result)=>{
                     res.status(200).json({ message: 'Blog updated!' })
+                    
                 })
                 .catch((err)=>{
                     console.log(err)
                 })
+
+            }
         }else{
             res.status(403).json({error:'unauthorized'})
         }

@@ -34,7 +34,8 @@ const blogSchema = new Schema({
     [{
         // data: Buffer,
         // contentType: String,
-        image_path:String
+        image_path:String,
+        full_path:String
     }]
 
 },{timestamps: true});

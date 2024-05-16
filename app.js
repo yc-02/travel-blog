@@ -11,8 +11,7 @@ const app = express()
 
 
 
-const uri = `mongodb+srv://${process.env.username}:${process.env.password}@cluster0.toa8pga.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
-mongoose.connect(uri)
+mongoose.connect(process.env.MONGODB_URI)
     .then((result)=>app.listen(3000))
     .catch((err)=>console.log(err))
 

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const blogController = require('../controllers/blogController');
 const {checkCurrentUser} = require('../middleware/authMiddleware');
-const {upload} = require('../middleware/multerConfig')
+const {upload} = require('../config/multerConfig')
 
 
 
