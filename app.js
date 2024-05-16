@@ -10,8 +10,9 @@ require('dotenv').config()
 const app = express()
 
 
+const uri =`mongodb+srv://yingcui02:cuiying@cluster0.toa8pga.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
 
-mongoose.connect(process.env.MONGODB_URI)
+mongoose.connect(uri)
     .then((result)=>app.listen(3000))
     .catch((err)=>console.log(err))
 
