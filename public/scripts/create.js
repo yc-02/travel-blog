@@ -1,5 +1,3 @@
-
-
 const form = document.getElementById('addForm')
 
 //preview image

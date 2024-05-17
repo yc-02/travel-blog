@@ -40,15 +40,13 @@
 
         // Preload the actual image
         function imageLoaded() {
-            console.log('loaded')
-                setTimeout(()=>{
-                    loading.forEach(load=>{
+            loading.forEach(load=>{
                     load.style.display='none'
                 })
-                blogImage.forEach(image=>{
+            blogImage.forEach(image=>{
                     image.style.display='block'
                 })
-            },50)
+            
         };
 
     </script>
