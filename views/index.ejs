@@ -2,9 +2,9 @@
 <body>
     <%- include('./partials/nav.ejs')%>
     <div class="homePage">
-        <form method="GET" action="/blogs" id="searchForm">
-            <input placeholder="Search" id="searchInput" name="search"/>
-            <button><i class="fa-solid fa-magnifying-glass fa-xl"></i></button>
+        <form method="GET" action="/blogs" id="searchForm" style="display: flex; justify-content: end; align-items: center; gap: 3px; margin-bottom: 13px;">
+            <input placeholder="Search" id="searchInput" name="search" style=" padding: 10px; font-size: 16px; border-radius: 10px; border: none; box-shadow: 2px 2px rgba(0, 0, 0, 0.03);"/>
+            <button style="border: none; background: none; cursor: pointer;color: rgb(77, 77, 77);"><i class="fa-solid fa-magnifying-glass fa-xl"></i></button>
         </form>
         <% if (blogs.length>0){ %>
             <div class="blogCard">
