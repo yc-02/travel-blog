@@ -7,9 +7,16 @@ const { uploadBytes, ref, getDownloadURL, deleteObject } = require('firebase/sto
 
 
 const blog_index = (req,res)=>{
+    const {search} = req.query
     Blog.find().sort({createdAt:-1})
     .then((result)=>{
-        res.render('index',{title:'Travel Blog',blogs:result})
+        if(search){
+            const destination = result.filter(item=>item.destination.toLowerCase().includes(search.toString().toLowerCase()))
+            res.render('index',{title:'Travel Blog',blogs:destination})
+
+        }else{
+            res.render('index',{title:'Travel Blog',blogs:result})
+        }
     })
     .catch((err)=>{
         console.log(err)

@@ -2,6 +2,10 @@
 <body>
     <%- include('./partials/nav.ejs')%>
     <div class="homePage">
+        <form method="GET" action="/blogs" id="searchForm">
+            <input placeholder="Search" id="searchInput" name="search"/>
+            <button><i class="fa-solid fa-magnifying-glass fa-xl"></i></button>
+        </form>
         <% if (blogs.length>0){ %>
             <div class="blogCard">
             <% blogs.forEach(blog=>{%>
@@ -48,6 +52,15 @@
                 })
             
         };
+        const searchForm = document.getElementById('searchForm')
+        const searchInput = document.getElementById('searchInput')
+        searchInput.addEventListener('keydown',(event)=>{
+            if(event.key === 'Enter'){
+                event.preventDefault()
+                searchForm.submit()
+                console.log('submit')
+            }
+        })
 
     </script>
 </body>

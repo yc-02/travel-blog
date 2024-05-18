@@ -13,6 +13,8 @@ yarn-error.log*
 .env*.local
 .env
 
+travel-blog.git
+travel-blog.git*
 # vercel
 .vercel
 
