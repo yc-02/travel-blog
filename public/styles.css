@@ -108,6 +108,15 @@ footer{
 .blogText{
     width: 40%;
     padding: 20px;
+
+}
+.blogText h3{
+    margin: 0;
+    font-size: 18px;
+}
+.blogText p{
+    margin: 3px;
+    font-size: 15px;
 }
 .blogImage{
     width: 50%;
@@ -365,11 +374,9 @@ footer{
         margin: 0;
     }
     .blogText h3{
-        margin: 0;
         font-size: 18px;
     }
     .blogText p{
-        margin: 3px;
         font-size: 15px;
     }
     .navbar{
